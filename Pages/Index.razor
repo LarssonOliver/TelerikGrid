@@ -1,0 +1,39 @@
+﻿@page "/"
+<TelerikRootComponent>
+
+    <h1>Hello, world!</h1>
+
+    @using Telerik.Blazor.Components;
+
+    <CultureSelector />
+
+    <TelerikGrid Data="@MyData" Height="400px"
+                    ScrollMode="Telerik.Blazor.GridScrollMode.Virtual"
+                    PageSize="10" RowHeight="36" TotalCount="@MyData.Count()">
+        <GridColumns>
+            <GridColumn Field="@(nameof(SampleData.Id))" Width="120px" />
+            <GridColumn Field="@(nameof(SampleData.Name))" Title="Employee Name" Groupable="false" />
+            <GridColumn Field="@(nameof(SampleData.Team))" Title="Team" />
+            <GridColumn Field="@(nameof(SampleData.HireDate))" Title="Hire Date" />
+        </GridColumns>
+    </TelerikGrid>
+
+</TelerikRootComponent>
+
+@code {
+    public IEnumerable<SampleData> MyData = Enumerable.Range(1, 30).Select(x => new SampleData
+    {
+        Id = x,
+        Name = "name " + x,
+        Team = "team " + x % 5,
+        HireDate = DateTime.Now.AddDays(-x).Date
+    });
+
+    public class SampleData
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Team { get; set; }
+        public DateTime HireDate { get; set; }
+    }
+}
